@@ -1,3 +1,4 @@
+
 # Getting Started README
 
 ### Reference Documentation
@@ -77,4 +78,3 @@ To run your existing tests in a native image, run the following goal:
 ```
 $ ./mvnw test -PnativeTest
 ```
-
