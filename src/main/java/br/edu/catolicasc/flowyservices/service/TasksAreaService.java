@@ -18,9 +18,8 @@ public class TasksAreaService {
         return tasksAreaRepository.findByAreasId(areasId);
     }
 
-    public Optional<TasksArea> getTaskById(Long areasId, Long tasksId) {
-        return tasksAreaRepository.findById(tasksId)
-                .filter(task -> task.getAreasId().equals(areasId));
+    public Optional<TasksArea> getTaskById(Long tasksId) {
+        return tasksAreaRepository.findById(tasksId);
     }
 
     public TasksArea saveTask(TasksArea task) {

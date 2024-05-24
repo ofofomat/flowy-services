@@ -2,6 +2,7 @@ package br.edu.catolicasc.flowyservices.controller;
 
 import br.edu.catolicasc.flowyservices.entity.Project;
 import br.edu.catolicasc.flowyservices.entity.TasksProject;
+import br.edu.catolicasc.flowyservices.entity.TasksProjectDTO;
 import br.edu.catolicasc.flowyservices.service.ProjectService;
 import br.edu.catolicasc.flowyservices.service.TasksProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,17 @@ public class TasksProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<TasksProject> createTask(@PathVariable Long projectId, @RequestBody TasksProject tasksProjectDetails) {
+    public ResponseEntity<TasksProject> createTask(@PathVariable Long projectId, @RequestBody TasksProjectDTO tasksProjectDetails) {
         Optional<Project> project = projectService.getProjectById(projectId);
         if (project.isPresent()) {
-            tasksProjectDetails.setProjectId(projectId); // Set the projectId
-            TasksProject savedTasksProject = tasksProjectService.saveTask(tasksProjectDetails);
+            TasksProject tasksProject = new TasksProject();
+            tasksProject.setProjectId(projectId); // Set the projectId
+            tasksProject.setTitle(tasksProjectDetails.getTitle());
+            tasksProject.setDescription(tasksProjectDetails.getDescription());
+            tasksProject.setDate(tasksProjectDetails.getDate());
+            tasksProject.setPriority(tasksProjectDetails.getPriority());
+
+            TasksProject savedTasksProject = tasksProjectService.saveTask(tasksProject);
             return ResponseEntity.ok(savedTasksProject);
         } else {
             return ResponseEntity.notFound().build();
@@ -49,7 +56,7 @@ public class TasksProjectController {
     }
 
     @PutMapping("/{tasksProjectId}")
-    public ResponseEntity<TasksProject> updateTask(@PathVariable Long projectId, @PathVariable Long tasksProjectId, @RequestBody TasksProject tasksProjectDetails) {
+    public ResponseEntity<TasksProject> updateTask(@PathVariable Long projectId, @PathVariable Long tasksProjectId, @RequestBody TasksProjectDTO tasksProjectDetails) {
         Optional<TasksProject> existingTask = tasksProjectService.getTaskById(tasksProjectId);
         if (existingTask.isPresent() && existingTask.get().getProjectId().equals(projectId)) {
             TasksProject updatedTask = existingTask.get();
