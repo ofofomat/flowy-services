@@ -2,6 +2,7 @@ package br.edu.catolicasc.flowyservices.entity;
 
 import br.edu.catolicasc.flowyservices.entity.enums.Priority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
