@@ -23,7 +23,7 @@ public class LoginRequest {
     }
 
     public String getUserEmail() {
-        return userPassword;
+        return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
