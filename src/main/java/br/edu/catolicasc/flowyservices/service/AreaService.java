@@ -2,7 +2,6 @@ package br.edu.catolicasc.flowyservices.service;
 
 import br.edu.catolicasc.flowyservices.entity.Area;
 import br.edu.catolicasc.flowyservices.repository.AreaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class AreaService {
 
-    @Autowired
-    private AreaRepository areaRepository;
+    private final AreaRepository areaRepository;
+
+    public AreaService(AreaRepository areaRepository) {
+        this.areaRepository = areaRepository;
+    }
 
     public List<Area> getAllAreas() {
         return areaRepository.findAll();

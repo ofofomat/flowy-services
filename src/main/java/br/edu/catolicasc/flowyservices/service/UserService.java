@@ -2,7 +2,6 @@ package br.edu.catolicasc.flowyservices.service;
 
 import br.edu.catolicasc.flowyservices.entity.FlowyUser;
 import br.edu.catolicasc.flowyservices.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<FlowyUser> getAllUser() {
         return userRepository.findAll();

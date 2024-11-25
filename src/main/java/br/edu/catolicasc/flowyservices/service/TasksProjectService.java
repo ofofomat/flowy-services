@@ -2,7 +2,6 @@ package br.edu.catolicasc.flowyservices.service;
 
 import br.edu.catolicasc.flowyservices.entity.TasksProject;
 import br.edu.catolicasc.flowyservices.repository.TasksProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class TasksProjectService {
 
-    @Autowired
-    private TasksProjectRepository tasksProjectRepository;
+    private final TasksProjectRepository tasksProjectRepository;
+
+    public TasksProjectService(TasksProjectRepository tasksProjectRepository) {
+        this.tasksProjectRepository = tasksProjectRepository;
+    }
 
     public List<TasksProject> getTasksByProjectId(Long projectId) {
         return tasksProjectRepository.findByProjectId(projectId);
