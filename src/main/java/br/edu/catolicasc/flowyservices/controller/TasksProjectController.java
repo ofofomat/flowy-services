@@ -5,7 +5,6 @@ import br.edu.catolicasc.flowyservices.entity.TasksProject;
 import br.edu.catolicasc.flowyservices.entity.TasksProjectDTO;
 import br.edu.catolicasc.flowyservices.service.ProjectService;
 import br.edu.catolicasc.flowyservices.service.TasksProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +16,13 @@ import java.util.Optional;
 @RequestMapping("/projects/{projectId}/tasks")
 public class TasksProjectController {
 
-    @Autowired
-    private TasksProjectService tasksProjectService;
+    private final TasksProjectService tasksProjectService;
+    private final ProjectService projectService;
 
-    @Autowired
-    private ProjectService projectService;
+    public TasksProjectController(TasksProjectService tasksProjectService, ProjectService projectService) {
+        this.tasksProjectService = tasksProjectService;
+        this.projectService = projectService;
+    }
 
     @GetMapping
     public List<TasksProject> getTasksByProjectId(@PathVariable Long projectId) {
@@ -43,7 +44,7 @@ public class TasksProjectController {
         Optional<Project> project = projectService.getProjectById(projectId);
         if (project.isPresent()) {
             Project existingProject = project.get();
-            if (!existingProject.getProjectCheck()) {
+            if (Boolean.FALSE.equals(existingProject.getProjectCheck())) {
                 TasksProject tasksProject = new TasksProject();
                 tasksProject.setProjectId(projectId); // Set the projectId
                 tasksProject.setTitle(tasksProjectDetails.getTitle());

@@ -3,7 +3,6 @@ package br.edu.catolicasc.flowyservices.controller;
 import br.edu.catolicasc.flowyservices.entity.*;
 import br.edu.catolicasc.flowyservices.service.AreaService;
 import br.edu.catolicasc.flowyservices.service.TasksAreaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +13,13 @@ import java.util.Optional;
 @RequestMapping("/areas/{areasId}/tasks")
 public class TasksAreaController {
 
-    @Autowired
-    private TasksAreaService tasksAreaService;
+    private final TasksAreaService tasksAreaService;
+    private final AreaService areaService;
 
-    @Autowired
-    private AreaService areaService;
+    public TasksAreaController(TasksAreaService tasksAreaService, AreaService areaService) {
+        this.tasksAreaService = tasksAreaService;
+        this.areaService = areaService;
+    }
 
     @GetMapping
     public List<TasksArea> getAllTasksByAreaId(@PathVariable Long areasId) {

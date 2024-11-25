@@ -2,7 +2,7 @@ package br.edu.catolicasc.flowyservices.controller;
 
 import br.edu.catolicasc.flowyservices.entity.Area;
 import br.edu.catolicasc.flowyservices.service.AreaService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,11 @@ import java.util.Optional;
 @RequestMapping("/areas")
 public class AreaController {
 
-    @Autowired
-    private AreaService areaService;
+    private final AreaService areaService;
+
+    public AreaController(AreaService areaService) {
+        this.areaService = areaService;
+    }
 
     @GetMapping
     public List<Area> getAllAreas() {

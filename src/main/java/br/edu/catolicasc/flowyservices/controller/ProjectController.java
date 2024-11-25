@@ -2,7 +2,6 @@ package br.edu.catolicasc.flowyservices.controller;
 
 import br.edu.catolicasc.flowyservices.entity.Project;
 import br.edu.catolicasc.flowyservices.service.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import java.util.Optional;
 @RequestMapping("/projects")
 public class ProjectController {
 
-    @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Project>> getAllProjects() {

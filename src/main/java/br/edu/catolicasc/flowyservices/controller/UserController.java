@@ -3,7 +3,6 @@ package br.edu.catolicasc.flowyservices.controller;
 import br.edu.catolicasc.flowyservices.entity.FlowyUser;
 import br.edu.catolicasc.flowyservices.dto.LoginRequest;
 import br.edu.catolicasc.flowyservices.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<FlowyUser> getAllUser() {
@@ -30,11 +32,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody FlowyUser user) {
+    public ResponseEntity<FlowyUser> createUser(@RequestBody FlowyUser user) {
         // Verifica se o usuário já existe
         Optional<FlowyUser> existingUser = userService.getUserByUserName(user.getUserName());
         if (existingUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Usuário já existe");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(user);
         }
 
         // Caso não exista, salva o usuário
