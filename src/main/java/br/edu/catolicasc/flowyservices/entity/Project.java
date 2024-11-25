@@ -1,7 +1,6 @@
 package br.edu.catolicasc.flowyservices.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Project {
