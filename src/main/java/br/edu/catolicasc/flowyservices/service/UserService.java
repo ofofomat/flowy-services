@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -32,14 +33,6 @@ public class UserService {
     }
 
     public Optional<FlowyUser> getUserByUserName(String userName) {
-        Optional<FlowyUser> users = userRepository.findByUserName(userName);
-        if (users.stream().count() == 1) {
-            return Optional.of(users.get());
-        } else if (users.isEmpty()) {
-            return Optional.empty();
-        } else {
-            return Optional.empty();
-        }
+        return userRepository.findByUserName(userName).stream().findFirst();
     }
-
 }

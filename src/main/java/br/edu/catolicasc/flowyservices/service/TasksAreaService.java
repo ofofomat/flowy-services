@@ -2,7 +2,9 @@ package br.edu.catolicasc.flowyservices.service;
 
 import br.edu.catolicasc.flowyservices.entity.TasksArea;
 import br.edu.catolicasc.flowyservices.repository.TasksAreaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,25 +12,24 @@ import java.util.Optional;
 @Service
 public class TasksAreaService {
 
-    private final TasksAreaRepository tasksAreaRepository;
+    @Autowired
+    private TasksAreaRepository tasksAreaRepository;
 
-    public TasksAreaService(TasksAreaRepository tasksAreaRepository) {
-        this.tasksAreaRepository = tasksAreaRepository;
+    public List<TasksArea> getTasksByAreaId(Long areaId) {
+        return tasksAreaRepository.findByAreasId(areaId);
     }
 
-    public List<TasksArea> getAllTasksByAreaId(Long areasId) {
-        return tasksAreaRepository.findByAreasId(areasId);
+    public Optional<TasksArea> getTaskById(Long taskId) {
+        return tasksAreaRepository.findById(taskId);
     }
 
-    public Optional<TasksArea> getTaskById(Long tasksId) {
-        return tasksAreaRepository.findById(tasksId);
-    }
-
+    @Transactional
     public TasksArea saveTask(TasksArea task) {
         return tasksAreaRepository.save(task);
     }
 
-    public void deleteTask(Long tasksId) {
-        tasksAreaRepository.deleteById(tasksId);
+    @Transactional
+    public void deleteTask(Long taskId) {
+        tasksAreaRepository.deleteById(taskId);
     }
 }

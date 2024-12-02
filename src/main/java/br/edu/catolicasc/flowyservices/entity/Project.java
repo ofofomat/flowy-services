@@ -1,8 +1,19 @@
 package br.edu.catolicasc.flowyservices.entity;
 
-import jakarta.persistence.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Project {
 
     @Id
@@ -14,29 +25,4 @@ public class Project {
 
     @Column(nullable = false)
     private Boolean projectCheck;
-
-    // Getters and Setters
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getProjectCheck() {
-        return projectCheck;
-    }
-
-    public void setProjectCheck(Boolean projectCheck) {
-        this.projectCheck = projectCheck;
-    }
 }

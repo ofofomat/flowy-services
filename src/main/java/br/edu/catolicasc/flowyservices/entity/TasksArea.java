@@ -1,9 +1,21 @@
 package br.edu.catolicasc.flowyservices.entity;
 
 import br.edu.catolicasc.flowyservices.entity.enums.Priority;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TasksArea {
 
     @Id
@@ -25,52 +37,4 @@ public class TasksArea {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Priority priority;
-
-    public Long getTasksId() {
-        return tasksId;
-    }
-
-    public void setTasksId(Long tasksId) {
-        this.tasksId = tasksId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getAreasId() {
-        return areasId;
-    }
-
-    public void setAreasId(Long areasId) {
-        this.areasId = areasId;
-    }
-
-    public String getRecurrence() {
-        return recurrence;
-    }
-
-    public void setRecurrence(String recurrence) {
-        this.recurrence = recurrence;
-    }
-
-    public Priority getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-    }
 }

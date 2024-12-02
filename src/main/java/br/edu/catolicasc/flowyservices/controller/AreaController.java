@@ -1,13 +1,14 @@
 package br.edu.catolicasc.flowyservices.controller;
 
 import br.edu.catolicasc.flowyservices.entity.Area;
+import br.edu.catolicasc.flowyservices.exception.ResourceNotFoundException;
 import br.edu.catolicasc.flowyservices.service.AreaService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/areas")
@@ -26,40 +27,34 @@ public class AreaController {
 
     @GetMapping("/{areasId}")
     public ResponseEntity<Area> getAreaById(@PathVariable Long areasId) {
-        Optional<Area> area = areaService.getAreaById(areasId);
-        if (area.isPresent()) {
-            return ResponseEntity.ok(area.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Area area = areaService.getAreaById(areasId)
+                .orElseThrow(() -> new ResourceNotFoundException("Area not found with id " + areasId));
+        return ResponseEntity.ok(area);
     }
 
     @PostMapping
-    public Area createArea(@RequestBody Area area) {
-        return areaService.saveArea(area);
+    @Transactional
+    public ResponseEntity<Area> createArea(@RequestBody Area area) {
+        Area createdArea = areaService.saveArea(area);
+        return ResponseEntity.status(201).body(createdArea);
     }
 
     @PutMapping("/{areasId}")
+    @Transactional
     public ResponseEntity<Area> updateArea(@PathVariable Long areasId, @RequestBody Area areaDetails) {
-        Optional<Area> area = areaService.getAreaById(areasId);
-        if (area.isPresent()) {
-            Area updatedArea = area.get();
-            updatedArea.setName(areaDetails.getName());
-            areaService.saveArea(updatedArea);
-            return ResponseEntity.ok(updatedArea);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Area area = areaService.getAreaById(areasId)
+                .orElseThrow(() -> new ResourceNotFoundException("Area not found with id " + areasId));
+        area.setName(areaDetails.getName());
+        Area updatedArea = areaService.saveArea(area);
+        return ResponseEntity.ok(updatedArea);
     }
 
     @DeleteMapping("/{areasId}")
+    @Transactional
     public ResponseEntity<Void> deleteArea(@PathVariable Long areasId) {
-        Optional<Area> area = areaService.getAreaById(areasId);
-        if (area.isPresent()) {
-            areaService.deleteArea(areasId);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Area area = areaService.getAreaById(areasId)
+                .orElseThrow(() -> new ResourceNotFoundException("Area not found with id " + areasId));
+        areaService.deleteArea(areasId);
+        return ResponseEntity.noContent().build();
     }
 }

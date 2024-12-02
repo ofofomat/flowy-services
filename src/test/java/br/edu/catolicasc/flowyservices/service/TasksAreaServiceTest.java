@@ -35,7 +35,7 @@ class TasksAreaServiceTest {
 
         when(tasksAreaRepository.findByAreasId(areaId)).thenReturn(tasksList);
 
-        List<TasksArea> result = tasksAreaService.getAllTasksByAreaId(areaId);
+        List<TasksArea> result = tasksAreaService.getTasksByAreaId(areaId);
 
         assertEquals(2, result.size());
         verify(tasksAreaRepository, times(1)).findByAreasId(areaId);

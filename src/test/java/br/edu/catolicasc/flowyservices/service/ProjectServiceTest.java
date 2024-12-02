@@ -74,24 +74,24 @@ class ProjectServiceTest {
     void testGetArchivedProjects() {
         Project project1 = new Project();
         Project project2 = new Project();
-        when(projectRepository.findByProjectCheckTrue()).thenReturn(Arrays.asList(project1, project2));
+        when(projectRepository.findByProjectCheck(true)).thenReturn(Arrays.asList(project1, project2));
 
         List<Project> projects = projectService.getArchivedProjects();
 
         assertEquals(2, projects.size());
-        verify(projectRepository, times(1)).findByProjectCheckTrue();
+        verify(projectRepository, times(1)).findByProjectCheck(true);
     }
 
     @Test
     void testGetActiveProjects() {
         Project project1 = new Project();
         Project project2 = new Project();
-        when(projectRepository.findByProjectCheckFalse()).thenReturn(Arrays.asList(project1, project2));
+        when(projectRepository.findByProjectCheck(false)).thenReturn(Arrays.asList(project1, project2));
 
         List<Project> projects = projectService.getActiveProjects();
 
         assertEquals(2, projects.size());
-        verify(projectRepository, times(1)).findByProjectCheckFalse();
+        verify(projectRepository, times(1)).findByProjectCheck(false);
     }
 
     @Test

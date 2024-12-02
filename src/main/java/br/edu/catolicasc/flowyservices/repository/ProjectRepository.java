@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> findByProjectCheckTrue();
-    List<Project> findByProjectCheckFalse();
+    List<Project> findByProjectCheck(boolean projectCheck);
 }
