@@ -52,7 +52,7 @@ public class AreaController {
     @DeleteMapping("/{areasId}")
     @Transactional
     public ResponseEntity<Void> deleteArea(@PathVariable Long areasId) {
-        Area area = areaService.getAreaById(areasId)
+        areaService.getAreaById(areasId)
                 .orElseThrow(() -> new ResourceNotFoundException("Area not found with id " + areasId));
         areaService.deleteArea(areasId);
         return ResponseEntity.noContent().build();
